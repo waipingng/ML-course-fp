@@ -1,4 +1,7 @@
-![# ML-course-fp](figure/horse_racing.webp)
+<p align="center">
+  <img src="figure/horse_racing.webp" alt="ML-course-fp" width="600"/>
+</p>
+
 
 # 🐎 Horse Racing Prediction Project
 
