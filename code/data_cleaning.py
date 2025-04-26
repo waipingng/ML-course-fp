@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
+import numpy as np
 
 
 file_path = "data/race_results_with_ids.csv" 
@@ -40,8 +41,11 @@ df_cleaned["Top3"] = df_cleaned["Finish Position"].apply(lambda x: 1 if str(x) i
 
 
 one_hot_columns = ["Grade", "Weather", "Race Type"]
+df_cleaned.replace("NR", np.nan, inplace=True)
 df_encoded = pd.get_dummies(df_cleaned, columns=one_hot_columns, prefix=one_hot_columns)
-
+for col in df_encoded.columns:
+    if df_encoded[col].dropna().isin([True, False, 0, 1]).all():
+        df_encoded[col] = df_encoded[col].astype(int)
 
 df_encoded["Odds"] = pd.to_numeric(df_encoded["Odds"], errors='coerce')
 df_encoded["Horse Weight"] = pd.to_numeric(df_encoded["Horse Weight"], errors='coerce')
