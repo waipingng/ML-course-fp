@@ -85,6 +85,8 @@ df_cleaned["Top3"] = df_cleaned["Finish Position"].apply(lambda x: 1 if x in [1,
 one_hot_columns = ["Grade", "Weather", "Race Type"]
 df_cleaned.replace("NR", np.nan, inplace=True)
 df_encoded = pd.get_dummies(df_cleaned, columns=one_hot_columns, prefix=one_hot_columns)
+bool_cols = df_encoded.select_dtypes(include=['bool']).columns
+df_encoded[bool_cols] = df_encoded[bool_cols].astype(int)
 
 """
 11. Normalize numerical features: Odds and Horse Weight
