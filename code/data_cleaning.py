@@ -100,6 +100,6 @@ df_encoded[["Odds", "Horse Weight"]] = scaler.fit_transform(df_encoded[["Odds", 
 """
 12. Save cleaned dataset
 """
-output_path = "clean_data/cleaned_race_results.csv"
+output_path = "data/cleaned_race_results.csv"
 df_encoded.to_csv(output_path, index=False)
 
