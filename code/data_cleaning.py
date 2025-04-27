@@ -13,35 +13,35 @@ df = pd.read_csv(file_path)
 2. Select and rename useful columns
 """
 columns_to_keep = {
-    "Race ID": "Race ID",
-    "Track Info": "Race Type",
-    "Weather Icon": "Weather",
-    "Grade": "Grade",
-    "Finish Position": "Finish Position",
-    "Horse ID": "Horse ID",
-    "Age/Sex": "Age/Sex",
-    "Final Time": "Final Time",
-    "Odds": "Odds",
-    "Horse Weight (kg)": "Horse Weight"
+    "Race ID": "race_id",
+    "Track Info": "race_type",
+    "Weather Icon": "weather",
+    "Grade": "grade",
+    "Finish Position": "finish_position",
+    "Horse ID": "horse_id",
+    "Age/Sex": "age_sex",
+    "Final Time": "final_time",
+    "Odds": "odds",
+    "Horse Weight (kg)": "horse_weight"
 }
 df_cleaned = df[list(columns_to_keep.keys())].rename(columns=columns_to_keep)
 
 """
 3. Clean Race Type: extract numbers only
 """
-df_cleaned["Race Type"] = df_cleaned["Race Type"].astype(str).apply(lambda x: ''.join(re.findall(r'\d+', x)))
+df_cleaned["race_type"] = df_cleaned["race_type"].astype(str).apply(lambda x: ''.join(re.findall(r'\d+', x)))
 
 """
 4. Clean Horse Weight: remove comments in parentheses
 """
-df_cleaned["Horse Weight"] = df_cleaned["Horse Weight"].astype(str).apply(lambda x: re.sub(r'\s*\(.*?\)', '', x))
+df_cleaned["horse_weight"] = df_cleaned["horse_weight"].astype(str).apply(lambda x: re.sub(r'\s*\(.*?\)', '', x))
 
 """
 5. Split Age/Sex into two features: Age and Sex
 """
-df_cleaned["Age"] = df_cleaned["Age/Sex"].apply(lambda x: int(re.findall(r'\d+', str(x))[0]) if pd.notnull(x) else None)
-df_cleaned["Sex"] = df_cleaned["Age/Sex"].apply(lambda x: re.findall(r'[A-Za-z]+', str(x))[0] if pd.notnull(x) else None)
-df_cleaned = df_cleaned.drop(columns=["Age/Sex"])
+df_cleaned["Age"] = df_cleaned["age_sex"].apply(lambda x: int(re.findall(r'\d+', str(x))[0]) if pd.notnull(x) else None)
+df_cleaned["Sex"] = df_cleaned["age_sex"].apply(lambda x: re.findall(r'[A-Za-z]+', str(x))[0] if pd.notnull(x) else None)
+df_cleaned = df_cleaned.drop(columns=["age_sex"])
 
 """
 6. Encode Sex properly: One-hot encode horse type
@@ -63,26 +63,26 @@ def convert_final_time_to_seconds(time_str):
     except Exception:
         return np.nan
 
-df_cleaned["Final Time"] = df_cleaned["Final Time"].apply(convert_final_time_to_seconds)
+df_cleaned["final_time"] = df_cleaned["final_time"].apply(convert_final_time_to_seconds)
 
 """
 8. Clean Finish Position safely: ensure numeric integer only
 """
-df_cleaned["Finish Position"] = pd.to_numeric(df_cleaned["Finish Position"], errors='coerce')
-df_cleaned = df_cleaned.dropna(subset=["Finish Position"])
-df_cleaned = df_cleaned[np.isfinite(df_cleaned["Finish Position"])]
-df_cleaned["Finish Position"] = df_cleaned["Finish Position"].astype(int)
+df_cleaned["finish_position"] = pd.to_numeric(df_cleaned["finish_position"], errors='coerce')
+df_cleaned = df_cleaned.dropna(subset=["finish_position"])
+df_cleaned = df_cleaned[np.isfinite(df_cleaned["finish_position"])]
+df_cleaned["finish_position"] = df_cleaned["finish_position"].astype(int)
 
 """
 9. Create target variables: Top1 (Win) and Top3 (Top 3 Finish)
 """
-df_cleaned["Top1"] = df_cleaned["Finish Position"].apply(lambda x: 1 if x == 1 else 0)
-df_cleaned["Top3"] = df_cleaned["Finish Position"].apply(lambda x: 1 if x in [1, 2, 3] else 0)
+df_cleaned["Top1"] = df_cleaned["finish_position"].apply(lambda x: 1 if x == 1 else 0)
+df_cleaned["Top3"] = df_cleaned["finish_position"].apply(lambda x: 1 if x in [1, 2, 3] else 0)
 
 """
 10. One-Hot Encode categorical features: Grade, Weather, Race Type
 """
-one_hot_columns = ["Grade", "Weather", "Race Type"]
+one_hot_columns = ["grade", "weather", "race_type"]
 df_cleaned.replace("NR", np.nan, inplace=True)
 df_encoded = pd.get_dummies(df_cleaned, columns=one_hot_columns, prefix=one_hot_columns)
 bool_cols = df_encoded.select_dtypes(include=['bool']).columns
@@ -91,15 +91,16 @@ df_encoded[bool_cols] = df_encoded[bool_cols].astype(int)
 """
 11. Normalize numerical features: Odds and Horse Weight
 """
-df_encoded["Odds"] = pd.to_numeric(df_encoded["Odds"], errors='coerce')
-df_encoded["Horse Weight"] = pd.to_numeric(df_encoded["Horse Weight"], errors='coerce')
+df_encoded["odds"] = pd.to_numeric(df_encoded["odds"], errors='coerce')
+df_encoded["horse_weight"] = pd.to_numeric(df_encoded["horse_weight"], errors='coerce')
 
 scaler = MinMaxScaler()
-df_encoded[["Odds", "Horse Weight"]] = scaler.fit_transform(df_encoded[["Odds", "Horse Weight"]])
+df_encoded[["odds", "horse_weight"]] = scaler.fit_transform(df_encoded[["odds", "horse_weight"]])
 
 """
 12. Save cleaned dataset
 """
+df_encoded.columns = df_encoded.columns.str.lower()
 output_path = "data/cleaned_race_results.csv"
 df_encoded.to_csv(output_path, index=False)
 
