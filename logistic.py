@@ -12,18 +12,8 @@ from sklearn.metrics import confusion_matrix
 
 
 def train_model(X_train, y_train):
-    """
-    Train a logistic regression model on the given training data
-    
-    Args:
-        X_train: Training features
-        y_train: Training labels
-        
-    Returns:
-        model: Trained logistic regression model
-    """
     # Initialize the model with suitable parameters
-    model = LogisticRegression(max_iter=1000, random_state=42)
+    model = LogisticRegression(max_iter=1000, random_state=42, class_weight='balanced')
     
     # Train the model
     model.fit(X_train, y_train)
@@ -32,17 +22,6 @@ def train_model(X_train, y_train):
 
 
 def test_model(model, X_test, y_test):
-    """
-    Test the trained model on test data and return performance metrics
-    
-    Args:
-        model: Trained logistic regression model
-        X_test: Test features
-        y_test: Test labels
-        
-    Returns:
-        dict: Dictionary containing various performance metrics
-    """
     # Make predictions
     y_pred = model.predict(X_test)
     
@@ -67,18 +46,6 @@ def test_model(model, X_test, y_test):
 
 
 def run_logistic_regression(X_train, y_train, X_test, y_test):
-    """
-    Run the full logistic regression pipeline: train and test
-    
-    Args:
-        X_train: Training features
-        y_train: Training labels
-        X_test: Test features
-        y_test: Test labels
-        
-    Returns:
-        tuple: (model, results)
-    """
     # Train model
     model = train_model(X_train, y_train)
     
