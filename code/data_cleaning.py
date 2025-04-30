@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+
 
 """
 1. Load dataset
@@ -22,7 +22,8 @@ columns_to_keep = {
     "Age/Sex": "age_sex",
     "Final Time": "final_time",
     "Odds": "odds",
-    "Horse Weight (kg)": "horse_weight"
+    "Horse Weight (kg)": "horse_weight",
+    "Weight (kg)": "jockey_weight"
 }
 df_cleaned = df[list(columns_to_keep.keys())].rename(columns=columns_to_keep)
 
@@ -32,11 +33,15 @@ df_cleaned = df[list(columns_to_keep.keys())].rename(columns=columns_to_keep)
 df_cleaned["race_type"] = df_cleaned["race_type"].astype(str).apply(lambda x: ''.join(re.findall(r'\d+', x)))
 
 """
-4. Clean Horse Weight: remove comments in parentheses
+4. Clean Horse Weight: remove comments in parentheses and calculate total weight
 """
 df_cleaned["horse_weight"] = df_cleaned["horse_weight"].astype(str).apply(lambda x: re.sub(r'\s*\(.*?\)', '', x))
+df_cleaned["horse_weight"] = pd.to_numeric(df_cleaned["horse_weight"], errors="coerce")
+df_cleaned["jockey_weight"] = pd.to_numeric(df_cleaned["jockey_weight"], errors="coerce")
+df_cleaned["total_weight"] = df_cleaned["horse_weight"] + df_cleaned["jockey_weight"]
 
-"""
+
+""""
 5. Split Age/Sex into two features: Age and Sex
 """
 df_cleaned["Age"] = df_cleaned["age_sex"].apply(lambda x: int(re.findall(r'\d+', str(x))[0]) if pd.notnull(x) else None)
@@ -73,6 +78,8 @@ df_cleaned = df_cleaned.dropna(subset=["finish_position"])
 df_cleaned = df_cleaned[np.isfinite(df_cleaned["finish_position"])]
 df_cleaned["finish_position"] = df_cleaned["finish_position"].astype(int)
 
+
+
 """
 9. Create target variables: Top1 (Win) and Top3 (Top 3 Finish)
 """
@@ -89,13 +96,13 @@ bool_cols = df_encoded.select_dtypes(include=['bool']).columns
 df_encoded[bool_cols] = df_encoded[bool_cols].astype(int)
 
 """
-11. Normalize numerical features: Odds and Horse Weight
+11. calculate average finish time
 """
-df_encoded["odds"] = pd.to_numeric(df_encoded["odds"], errors='coerce')
-df_encoded["horse_weight"] = pd.to_numeric(df_encoded["horse_weight"], errors='coerce')
+avg_final_time = df_cleaned.groupby("horse_id")["final_time"].mean()
+df_cleaned["avg_final_time"] = df_cleaned["horse_id"].map(avg_final_time)
+df_cleaned["avg_final_time"] = pd.to_numeric(df_cleaned["avg_final_time"], errors="coerce")
+df_encoded["avg_final_time"] = df_cleaned["avg_final_time"]
 
-scaler = MinMaxScaler()
-df_encoded[["odds", "horse_weight"]] = scaler.fit_transform(df_encoded[["odds", "horse_weight"]])
 
 """
 12. Save cleaned dataset
