@@ -76,6 +76,8 @@ We tested the following models:
 
     XGBoost (advanced, newly introduced technique)
 
+    Neural Network (PyTorch)
+
 
 ## Metrics
 
