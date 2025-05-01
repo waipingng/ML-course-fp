@@ -2,7 +2,6 @@ import pandas as pd
 import re
 import numpy as np
 
-
 """
 1. Load dataset
 """
@@ -28,9 +27,15 @@ columns_to_keep = {
 df_cleaned = df[list(columns_to_keep.keys())].rename(columns=columns_to_keep)
 
 """
-3. Clean Race Type: extract numbers only
+3. Clean Race Type: extract numbers only (track distance in meters)
 """
 df_cleaned["race_type"] = df_cleaned["race_type"].astype(str).apply(lambda x: ''.join(re.findall(r'\d+', x)))
+
+"""
+3.5 Extract numeric track distance BEFORE one-hot encoding
+"""
+df_cleaned["track_distance"] = pd.to_numeric(df_cleaned["race_type"], errors="coerce")
+df_cleaned["track_distance"] = df_cleaned["track_distance"].fillna(2000)
 
 """
 4. Clean Horse Weight: remove comments in parentheses and calculate total weight
@@ -40,8 +45,7 @@ df_cleaned["horse_weight"] = pd.to_numeric(df_cleaned["horse_weight"], errors="c
 df_cleaned["jockey_weight"] = pd.to_numeric(df_cleaned["jockey_weight"], errors="coerce")
 df_cleaned["total_weight"] = df_cleaned["horse_weight"] + df_cleaned["jockey_weight"]
 
-
-""""
+"""
 5. Split Age/Sex into two features: Age and Sex
 """
 df_cleaned["Age"] = df_cleaned["age_sex"].apply(lambda x: int(re.findall(r'\d+', str(x))[0]) if pd.notnull(x) else None)
@@ -78,8 +82,6 @@ df_cleaned = df_cleaned.dropna(subset=["finish_position"])
 df_cleaned = df_cleaned[np.isfinite(df_cleaned["finish_position"])]
 df_cleaned["finish_position"] = df_cleaned["finish_position"].astype(int)
 
-
-
 """
 9. Create target variables: Top1 (Win) and Top3 (Top 3 Finish)
 """
@@ -96,16 +98,44 @@ bool_cols = df_encoded.select_dtypes(include=['bool']).columns
 df_encoded[bool_cols] = df_encoded[bool_cols].astype(int)
 
 """
-11. calculate average finish time
+11. Calculate speed (m/s) = track_distance / final_time
 """
-avg_final_time = df_cleaned.groupby("horse_id")["final_time"].mean()
-df_cleaned["avg_final_time"] = df_cleaned["horse_id"].map(avg_final_time)
-df_cleaned["avg_final_time"] = pd.to_numeric(df_cleaned["avg_final_time"], errors="coerce")
-df_encoded["avg_final_time"] = df_cleaned["avg_final_time"]
-
+df_encoded["speed_mps"] = df_encoded["track_distance"] / df_encoded["final_time"]
 
 """
-12. Save cleaned dataset
+12. Calculate historical average speed (excluding current race)
+"""
+df_encoded["avg_speed_mps"] = 0.0
+horse_speed_history = df_encoded.groupby("horse_id")["speed_mps"].apply(lambda x: x.index.tolist()).to_dict()
+
+for horse_id, indices in horse_speed_history.items():
+    cumulative_speed = 0.0
+    for i, idx in enumerate(indices):
+        if i == 0:
+            avg_speed = 0.0
+        else:
+            avg_speed = cumulative_speed / i
+        df_encoded.at[idx, "avg_speed_mps"] = avg_speed
+        cumulative_speed += df_encoded.at[idx, "speed_mps"]
+
+"""
+13. Calculate historical average final time (excluding current race)
+"""
+df_encoded["avg_final_time_hist"] = 0.0
+horse_time_history = df_encoded.groupby("horse_id")["final_time"].apply(lambda x: x.index.tolist()).to_dict()
+
+for horse_id, indices in horse_time_history.items():
+    cumulative_time = 0.0
+    for i, idx in enumerate(indices):
+        if i == 0:
+            avg_time = 0.0
+        else:
+            avg_time = cumulative_time / i
+        df_encoded.at[idx, "avg_final_time_hist"] = avg_time
+        cumulative_time += df_encoded.at[idx, "final_time"]
+
+"""
+14. Save cleaned dataset
 """
 df_encoded.columns = df_encoded.columns.str.lower()
 output_path = "data/cleaned_race_results.csv"
