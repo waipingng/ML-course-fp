@@ -7,7 +7,7 @@
 
 ## Introduction
 
-In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top positions of a race and to evaluate different machine learning algorithms for predictive performance and interpretability.
+In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top 1 position of a race and to evaluate different machine learning algorithms for predictive performance and interpretability.
 
 ## Problem Statement
 
@@ -15,9 +15,6 @@ We formulate this as a multiclass classification problem:
 
     Top 1: Horse wins the race
 
-    Top 3: Horse places among the top three
-
-    Not Top 3: Horse finishes outside the top three
 
 The broader goals include:
 
@@ -29,7 +26,7 @@ The broader goals include:
 
 ## Data Overview
 
-    Source: Japan Jockey Club (JRA)
+    Source: Japan Jockey Association (JRA)
 
     Collection: Web-scraped historical data
 
@@ -74,10 +71,11 @@ We tested the following models:
 
     Random Forest
 
-    XGBoost (advanced, newly introduced technique)
+    LightGBM
 
     Neural Network (PyTorch)
 
+    RBF SVC
 
 ## Metrics
 
