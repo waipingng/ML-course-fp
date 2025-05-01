@@ -34,16 +34,16 @@ The broader goals include:
 
 ## Features
 
--Race ID | Unique identifier for the race
--Race Type | Distance of race in meters
--Weather | Encoded weather condition (e.g., Weather01)
--Grade | Race classification (e.g., G1, G2, G3)
--Finish Position | Horse’s rank in the race
--Horse ID | Unique identifier for each horse
--Age/Sex | Horse's age and sex (e.g., 3F = 3-year-old filly)
--Final Time | Time to finish the race
--Odds | Betting odds prior to the race
--Horse Weight (kg) | Weight of the horse (excluding jockey)
+    -Race ID | Unique identifier for the race
+    -Race Type | Distance of race in meters
+    -Weather | Encoded weather condition (e.g., Weather01)
+    -Grade | Race classification (e.g., G1, G2, G3)
+    -Finish Position | Horse’s rank in the race
+    -Horse ID | Unique identifier for each horse
+    -Age/Sex | Horse's age and sex (e.g., 3F = 3-year-old filly)
+    -Final Time | Time to finish the race
+    -Odds | Betting odds prior to the race
+    -Horse Weight (kg) | Weight of the horse (excluding jockey)
 
 ## Feature Engineering
 
