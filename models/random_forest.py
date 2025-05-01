@@ -13,7 +13,7 @@ from sklearn.metrics import confusion_matrix
 
 def train_model(X_train, y_train):
     model = RandomForestClassifier(
-        n_estimators=100, 
+        n_estimators=90, 
         max_depth=None, 
         random_state=42, 
         class_weight='balanced'
