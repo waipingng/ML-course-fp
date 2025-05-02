@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figure/horse_racing.webp" alt="ML-course-fp" width="600"/>
+  <img src="figures/horse_racing.webp" alt="ML-course-fp" width="600"/>
 </p>
 
 
