@@ -146,7 +146,7 @@ print("Number of races with exactly 16 horses:", df_encoded_count)
 14. Save cleaned dataset (only 16-horse races)
 """
 df_encoded.columns = df_encoded.columns.str.lower()
-output_path = "data/cleaned_race_results.csv"
+output_path = "data/cleaned_race_results_for_lightgbm.csv"
 df_encoded.to_csv(output_path, index=False)
 
 
