@@ -67,9 +67,11 @@ We tested the following models:
 
     RBF SVC
 ### LightGBMClassifier Model: 
-* LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with parwise since it is a ranking problem to let horses compete 
-
-
+* LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with parwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
+* Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
+### LightGBM Ranker: 
+* LightGBM Ranker is special version of LightGBM designed for learning-to-rank like horse ranking. The lightGBM Ranker can predict ranking order within group, istead of training horses individually. 
+* Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy from LightGBM Ranker which is group-awarness.
 ## Metrics
 
 Models were evaluated using:
@@ -83,9 +85,17 @@ Models were evaluated using:
     Confusion Matrix
 
 ## Results
-
+### Results for LightGBMClassifier Model:
+#### Classification Report
+![Classification Report for LightGBMClassifier Model](pictures_for_readme/classification_report_lightgbm.png)
+#### AUC Score
+![AUC Score for LightGBMClassifier Model](pictures_for_readme/auc_score_lightgbm.png)
+### Results for LightGBM Ranker:
+#### Top-1 Accuracy
+![AUC Score for LightGBMClassifier Model](pictures_for_readme/top1_accuracy_lightgbm_ranker.png)
 ## Limitations
-
+* Different Features in Models: Since each model was trained using a different set of features, which may affect the fairness and consistency of model comparisons. Since the input features are not standardized across models, differences in performance may partially reflect differences in feature selection rather than model capability alone.
+* Imbalanced Dataset: Since only one horse per race is labeled as a winner (1), while the other 15 are labeled as non-winners (0). This imbalance may affect the model’s ability to accurately predict the true winner.
 ## Conclusion/Recommendation
 
 ## Appendix
