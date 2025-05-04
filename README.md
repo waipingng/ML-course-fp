@@ -3,7 +3,7 @@
 </p>
 
 
-# 🐎 Horse Racing Prediction Project
+# Ichiban Runner – Who Is Number One Horse
 
 ## Introduction
 
