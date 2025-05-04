@@ -14,15 +14,17 @@ df = pd.read_csv(file_path)
 columns_to_keep = {
     "Race ID": "race_id",
     "Track Info": "race_type",
+    "Weight (kg)": "jockey_weight",
+    "Horse Weight (kg)": "horse_weight",
     "Weather Icon": "weather",
     "Grade": "grade",
     "Finish Position": "finish_position",
     "Horse ID": "horse_id",
     "Age/Sex": "age_sex",
     "Final Time": "final_time",
-    "Odds": "odds",
-    "Horse Weight (kg)": "horse_weight",
-    "Weight (kg)": "jockey_weight"
+    "Favorite": "favorite",
+    "Bracket Number": "bracket_number"
+
 }
 df_cleaned = df[list(columns_to_keep.keys())].rename(columns=columns_to_keep)
 
