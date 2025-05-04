@@ -33,17 +33,7 @@ The broader goals include:
     Granularity: Each row = one horse’s result in one race
 
 ## Features
-
-    -Race ID | Unique identifier for the race
-    -Race Type | Distance of race in meters
-    -Weather | Encoded weather condition (e.g., Weather01)
-    -Grade | Race classification (e.g., G1, G2, G3)
-    -Finish Position | Horse’s rank in the race
-    -Horse ID | Unique identifier for each horse
-    -Age/Sex | Horse's age and sex (e.g., 3F = 3-year-old filly)
-    -Final Time | Time to finish the race
-    -Odds | Betting odds prior to the race
-    -Horse Weight (kg) | Weight of the horse (excluding jockey)
+* Since each model learns features differently, these models we try are input different features based on their feature importances.
 
 ## Feature Engineering
 
@@ -76,7 +66,8 @@ We tested the following models:
     Neural Network (PyTorch)
 
     RBF SVC
-* LightGBMClassifier Pairwise Model: Using `lightgbm_diff_paiwise.ipynb` 
+### LightGBMClassifier Model: 
+* LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with parwise since it is a ranking problem to let horses compete 
 
 
 ## Metrics
