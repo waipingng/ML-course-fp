@@ -76,6 +76,8 @@ We tested the following models:
     Neural Network (PyTorch)
 
     RBF SVC
+* LightGBMClassifier Pairwise Model: Using `lightgbm_diff_paiwise.ipynb` 
+
 
 ## Metrics
 
