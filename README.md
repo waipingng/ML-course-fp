@@ -7,13 +7,13 @@
 
 ## Introduction
 
-In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top 1 position of a race and to evaluate different machine learning algorithms for predictive performance and interpretability.
+In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top 1 position of a race with 16 hourses and to evaluate different machine learning algorithms for predictive performance and interpretability.
 
 ## Problem Statement
 
 We formulate this as a multiclass classification problem:
 
-    Top 1: Horse wins the race
+    Top 1 Horse wins the race
 
 
 The broader goals include:
@@ -43,7 +43,7 @@ The broader goals include:
 
 - One-hot encoded Grade, Weather, and Race Type.
 
-- Created binary target variables for Top 1 and Top 3 finishes.
+- Created binary target variables for Top 1 finishes.
 
 - Normalized Odds and Horse Weight.
 
@@ -66,6 +66,16 @@ We tested the following models:
     Neural Network (PyTorch)
 
     RBF SVC
+
+Models were evaluated using:
+
+    Accuracy
+
+    ROC-AUC Score
+
+    Average Precision
+
+    Confusion Matrix
 
 ### Decision Tree Mode:
 
@@ -149,15 +159,7 @@ Despite generally being powerful, the Random Forest model showed very limited pr
 * Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy from LightGBM Ranker which is group-awarness.
 ## Metrics
 
-Models were evaluated using:
 
-    Accuracy
-
-    ROC-AUC Score
-
-    Average Precision
-
-    Confusion Matrix
 
 ## Results
 ### Results for LightGBMClassifier Model:
