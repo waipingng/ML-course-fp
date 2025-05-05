@@ -188,6 +188,8 @@ AUC Score: 0.7743
 ## Limitations
 * Different Features in Models: Since each model was trained using a different set of features, which may affect the fairness and consistency of model comparisons. Since the input features are not standardized across models, differences in performance may partially reflect differences in feature selection rather than model capability alone.
 * Imbalanced Dataset: Since only one horse per race is labeled as a winner (1), while the other 15 are labeled as non-winners (0). This imbalance may affect the model’s ability to accurately predict the true winner.
+* Data Leakage: We use the latest data to predict ranking for the race using LightGBMClassifier model. However, the model can perfectly predict the rank of each horse. Therefore, there is most likely some data leakage to cause this problem.
+![05/04/2025 Horse Racing](pictures_for_readme/0504_ranking.png)
 ## Conclusion/Recommendation
 
 ## Appendix
