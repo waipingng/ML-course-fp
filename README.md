@@ -500,10 +500,11 @@ Despite the limited size and scope of the dataset, our models were able to captu
   <img src="pictures_for_readme/0504_ranking.png" alt="ML-course-fp" width="600"/>
 </p>
 When we look into the result we will find "Redentor" is the most likely one to win the 1st place in the certain race. After softmax process we assume the probability is valid and reliable so "Redentor" very likely has about 42.72% probability to win. 
-1. So if we only play [Win Betting] at this time, we will compare the implied probability which we get from odds with the 42.72% that "Redentor" win. If 42.72% is greater than the implied probability we will bet on "Redentor", if not maybe will looking for the comparison of "Byzanine Dream"'s win probability(42.18) and its implied probability of win. Or we just give up. But in general the profit in expression is not the expected profit and if we look deeper in expected profit that will not be a good number for profit.
+
+- 1. So if we only play [Win Betting] at this time, we will compare the implied probability which we get from odds with the 42.72% that "Redentor" win. If 42.72% is greater than the implied probability we will bet on "Redentor", if not maybe will looking for the comparison of "Byzanine Dream"'s win probability(42.18) and its implied probability of win. Or we just give up. But in general the profit in expression is not the expected profit and if we look deeper in expected profit that will not be a good number for profit.
 For example, if we win the bet on "Redentor", we will get the profit = ("Redentor"'s odds-1) * [our bet amount] * (1-0.2), if we lose we get 0.
-2. If we play Place betting(Top 3), this would be more safe(risk averse) for us, simply we can just look at the result and bet on "Redentor" on Top3 position. But here we don't have the odds for Place Betting so we can not get a expression for the profit of the certain betting. Also it is worth to notice the profit we disscuss here is not our expected profit, it is unstable and not that reliable.
-3. For the last one Trifecta, currently our model can't predict it very well so we will not play this bet model for now. 
+- 2. If we play Place betting(Top 3), this would be more safe(risk averse) for us, simply we can just look at the result and bet on "Redentor" on Top3 position. But here we don't have the odds for Place Betting so we can not get a expression for the profit of the certain betting. Also it is worth to notice the profit we disscuss here is not our expected profit, it is unstable and not that reliable.
+- 3. For the last one Trifecta, currently our model can't predict it very well so we will not play this bet model for now. 
 
 #### XGBRegressor featues Encode
 * Bracekt
