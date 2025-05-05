@@ -7,7 +7,7 @@
 
 ## Introduction
 
-In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top 1 position of a race with 16 hourses and to evaluate different machine learning algorithms for predictive performance and interpretability.
+In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the https://en.netkeiba.com/. Our primary goal is to determine whether a horse will finish in the top 1 position of a race with 16 hourses and to evaluate different machine learning algorithms for predictive performance and interpretability.
 
 ## Problem Statement
 
@@ -484,3 +484,47 @@ Despite the limited size and scope of the dataset, our models were able to captu
 
 
 ## Appendix
+#### Betting
+* Betting in Japanese horse racing generally falls into three main categories:
+- Win betting – The bettor selects a single horse to finish in 1st place. If the horse wins, the bettor receives a payout based on the odds. However, approximately 20% of the total betting profit is taken as fee.
+- Place betting (Top 3) – The bettor selects a single horse to finish within the top three. If the horse places 1st, 2nd, or 3rd, the bettor is paid according to the odds. Again, around 20% of the total profit is deducted by the racing association.
+- Trifecta – The bettor selects three horses and their exact finishing order (1st, 2nd, and 3rd). If the prediction is entirely correct, the payout is made based on the odds. In this case, about 27.5% of the total profit is retained by the racing association.
+
+#### XGBRegressor featues Encode
+* Bracekt
+- In Japanese horse racing, each horse is assigned a bracket number (1–8) based on its gate position, grouped by color. Horses in inner brackets (such as 1 or 2) start closer to the rail, which may benefit fast starters. In contrast, outer brackets (like 7 or 8) offer more running space but usually require the horse to cover slightly more distance around the turns.
+* AVG_Speed
+- The average speed of a horse across all its past races before the current one, calculated as total distance run divided by total race time (in seconds). However, this may dilute the advantage of horses that specialize in short-distance races. Therefore, race distance is also included as a separate feature later on.
+* Speed_rank
+- This indicates a horse's rank in terms of historical average speed among all horses participating in the current race. The higher the rank, the faster the horse has been on average.
+* Track_Distance
+- The total distance the horse is required to run in the race.
+* Features_Scale
+- Defined as:
+(Numeric value of a target horse’s feature) ÷ (mean value of the same feature across the other horses in the race).
+This normalized metric is used to compare how a horse's feature stands relative to the rest of the field in the same race
+* AVG_Speed_Mean
+- The average of historical average speeds of all other horses in the same race (excluding the target horse).
+* Top3_Percentage
+- For each horse, this is the percentage of past races in which the horse finished in the top 3.
+* Top3_Percentage_Mean
+- Among the horses in the same race (excluding the target horse), this is the average percentage of races in which they placed in the top 3 in their past performance history.
+* Age_Mean
+- The average age of all other horses in the same race (excluding the target horse).
+* Weather_icon
+- Represents the weather conditions on race day, such as sunny, cloudy, or rainy.
+* Reason: My method is to use XGBRegressor with some horse-related features to predict the speed of each horse in a race. Then, by ranking the predicted speeds of each horse’s in the race, I obtain the final predicted placement of each horse in the race.
+More specifically, I first group the data by race_id, so that each group represents one race. Then, I process the features of the horses in each race_id group in order to make the comparison among horses more meaningful. Since the original features are mostly numerical and lack relative meaning within the same race, I apply scaling and ranking to these features to help the model better capture the differences among horses in the same group.
+
+
+#### XGB Limitations Extended Version
+- Data selection
+The prediction target of XGBRegressor is the speed of a given horse, and the final race ranking is determined by sorting the predicted speeds. Based on the feature importance results, the key factors influencing speed prediction vary depending on how the data is selected. When I ensured that each race included exactly 16 horses, the most important feature turned out to be the race grade. After analyzing the data, I found this was because out of the 1,164 races, the vast majority were G3, while G1 and G2 races accounted for only a small portion. There are clear differences in average horse speed across different race grades, which explains this result. Therefore, I also conducted separate analysis and prediction on G1 and G3 races. The results showed that when I relaxed the 16-horse constraint, the most important features for predicting speed changed. Specifically, the average age and average speed of the competing horses in the race became more influential. You can see prediction I did for Grade G1 G2 G3 in folder-model-`XGBRegressor` including a real vs prediction experiment for G1 race in `xgb_G1.ipynb`.
+- Model limitations
+First, XGBRegressor does not provide a reliable probability output, so it is hard to compare predictions with implied probabilities (1/odds), which limits its usefulness for bettors who want confidence in their wagers. Second, the model fails to explain real-world racing intuition. For example, in predicting top-three placements, features like favorite (fav), odds, and bracket often correlate strongly with race results in practice. Typically, lower odds and higher favorite rankings signal better expected performance. One well-known case is Rice Shower, nicknamed the "Black Assassin", who famously won several races by defeating top contenders. Despite this underdog narrative, Rice Shower’s fav ranking remained consistently high whenever it won, reflecting the bettors’ expectations. However, my model fails to capture or explain such intuition.
+Further, currently we can only input the data of horse one by one into the model and it can only output 16 results then to rank the predicted avergae speed, not very smart and can't input 16 horses' data at once. 
+Lastly, the integration with a database and proper data encapsulation is still incomplete. If all relevant data can be stored in a database and historical feature data can be easily retrieved for future race predictions, the entire process would become much more efficient. Of course, achieving this goal requires further work, but if time permits, this step would allow the model to continuously evolve and improve.
+
+
+
+
