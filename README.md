@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figures/horse_racing.webp" alt="ML-course-fp" width="600"/>
+  <img src="pictures_for_readme/horse_racing.webp" alt="ML-course-fp" width="600"/>
 </p>
 
 
@@ -66,6 +66,31 @@ We tested the following models:
     Neural Network (PyTorch)
 
     RBF SVC
+
+### Decision Tree Mode:
+
+Optimal Parameters Identified
+
+    Max Depth: None
+
+    Minimum Samples Split: 2
+
+    Criterion: Entropy
+
+Performance Results
+
+    Accuracy: 8.96%
+
+    Precision (weighted): 8.58%
+
+    Recall (weighted): 8.96%
+
+    F1 Score (weighted): 8.69%
+
+Interpretation of Results
+
+The Decision Tree model performed poorly in predicting horse racing outcomes, indicated by very low accuracy and F1 scores. The model's results imply high unpredictability or complexity within the horse racing data that simple decision boundaries fail to capture effectively.
+
 ### LightGBMClassifier Model: 
 * LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with parwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
 * Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
