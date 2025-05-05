@@ -257,9 +257,9 @@ Models were evaluated using the following standard classification metrics:
   <img src="pictures_for_readme/confusion_matrix_rbf_svm.png" alt="ML-course-fp" width="600"/>
 </p>
 
-## 🧠 Results Interpretation
+## Results Interpretation
 
-Despite the inherent complexity of the horse racing prediction task, our models demonstrated **meaningful progress beyond random guessing**, with the best performing model—**a CNN-based neural network**—achieving **~10.8% accuracy**, compared to a random baseline of 6.25%.
+Despite the inherent complexity of the horse racing prediction task, our models demonstrated **meaningful progress beyond random guessing**, with the best performing model **CNN-based neural network** achieving **~10.8% accuracy**, compared to a random baseline of 6.25%.
 
 This result highlights the **value of structured data preprocessing** and **feature engineering**, as well as the **potential of deep learning architectures** to extract patterns even in challenging, imbalanced multiclass settings.
 
