@@ -440,6 +440,7 @@ Our key findings include:
 
 - **Neural Network (CNN)** showed the best performance across all major metrics (accuracy, precision, recall, F1 score), achieving ~10.8% accuracy—significantly above the random baseline of 6.25%.
 - Traditional models such as Random Forests and SVMs struggled in this highly imbalanced and competitive setting, often defaulting to dominant class predictions.
+- For LightGBMClassifier/Ranker, LightGBM still most likely faces some data leakage and inheretant data issue; however, the precison for class 1 is 1 means that once model identifise the winner, then that horse is actual winner in the race. Because of imbalanced data set, it causes recall for class 1 i pretty low which is 0.0667. The model mises a lot of many true many winners. The result of LightGBM Ranker means that in about 42.65% of races, the model correctly predicted the horse that finished first as having the highest predicted score among the 16 competitors.
 
 Despite the limited size and scope of the dataset, our models were able to capture subtle patterns that contribute to winning probabilities. This result underscores the potential of machine learning in sports prediction, while also highlighting the importance of high-quality, feature-rich data for building truly competitive models.
 
