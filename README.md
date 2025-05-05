@@ -187,6 +187,22 @@ A gradient boosting framework optimized for speed and efficiency using histogram
 - Can overfit on small or noisy datasets  
 - Extremely fast compared to traditional boosting  
 
+---
+
+### XGBRegressor
+XGBRegressor is an efficient and scalable regression model.
+**Best for**:
+- Structured/tabular regression problems
+- Non-linear relationships between features and target
+- Applications like price prediction, demand forecasting, or sports performance modeling (e.g. horse racing speed prediction)
+
+**Characteristics**:
+- Learns from residuals using gradient boosting trees
+- Robust to multicollinearity and irrelevant features
+- Supports regularization (L1 & L2) to reduce overfitting
+- Handles missing values automatically during training
+
+
 ## Evaluation
 
 Models were evaluated using the following standard classification metrics:
@@ -430,6 +446,35 @@ AUC Score: 0.7743
 * Data Leakage: We use the latest data to predict ranking for the race using LightGBMClassifier model. However, the model can perfectly predict the rank of each horse. Therefore, there is most likely some data leakage to cause this problem.
 ![05/04/2025 Horse Racing](pictures_for_readme/0504_ranking.png)
 
+
+## XGBoost Model
+### Model
+
+#### XGBRegressor Model:
+* XGBRegressor is an efficient and scalable regression model. It uses a boosting strategy that fits the residuals along the gradient direction, where each new tree aims to correct the errors made by the previous ones.By training a series of trees that improve step by step, the model minimizes prediction error and works well for regression tasks on structured data.
+* In horse racing prediction, XGBRegressor has a clear advantage:
+It can capture complex nonlinear relationships between horse features (such as weight, age, jockey experience, and track conditions) and the target variable (e.g., speed). Compared to traditional linear models, XGBRegressor does not require assumptions like feature independence or linear correlation, and it’s able to identify deeper interactions hidden in the data, making speed predictions more accurate.
+* My method is to use XGBRegressor with some horse-related features to predict the speed of each horse in a race. Then, by ranking the predicted average speeds of each horse’s in the race, I obtain the final predicted placement of each horse in the race. 
+* run `xgb_Race16.ipynb` to predict when there are exactly 16 horses in a race, you will get result based the prediction of average speed for each horse, then based on these speeds the we can get a rank from fastest to lowest average speed, and this will be the final rank for the race. You can also see the feature importance in the `xgb_Race16.ipynb` file.
+
+### Results
+#### XGBRegressor Model
+* Since it is not a typically classification model, I got the Mean_Absolute_Error and feature_importance of the model.
+<p align="center">
+  <img src="pictures_for_readme/16horsesFI.png" alt="ML-course-fp" width="600"/>
+</p>
+<p align="center">
+  <img src="pictures_for_readme/16horsesMAE.png" alt="ML-course-fp"/>
+</p>
+
+
+## Limitations
+* Data selection
+The prediction target of XGBRegressor is the speed of a given horse, and the final race ranking is determined by sorting the predicted speeds. Based on the feature importance results, the key factors influencing speed prediction vary depending on how the data is selected.
+* Data scarcity
+There is a general lack of data, especially for G1 and G2 races, which makes it difficult to train the model effectively for those categories. As a result, prediction accuracy for G1 and G2 races is lower. Although the dataset includes many features related to both horses and races, it still lacks certain critical variables—such as horses’ injury records, which directly affect their performance. The absence of such features likely reduces prediction accuracy.
+* Model limitations
+First, XGBRegressor does not provide a reliable probability output, so it is hard to compare predictions with implied probabilities (1/odds), which limits its usefulness for bettors who want confidence in their wagers. Second, the model fails to explain real-world racing intuition. 
 
 
 ## Conclusion
