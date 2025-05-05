@@ -67,7 +67,7 @@ We tested the following models:
 
     RBF SVC
 ### LightGBMClassifier Model: 
-* LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with parwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
+* LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with pairwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
 * Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
 ### LightGBM Ranker: 
 * LightGBM Ranker is special version of LightGBM designed for learning-to-rank like horse ranking. The lightGBM Ranker can predict ranking order within group, istead of training horses individually. 
