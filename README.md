@@ -314,6 +314,11 @@ While performance remains modest, the nature of the problem offers valuable insi
 
 - **Lack of High-Impact Features**  
   The features available for each horse are limited to numerical and categorical attributes such as age, weight, average race time, weather, and sex. However, horse racing outcomes are influenced by a multitude of complex, dynamic factors such as **track condition, jockey performance trends, recent race fatigue, or race strategy**.
+  - **Difficulty in Learning Relative Comparisons**  
+  Even though features are flattened per race to provide comparative context, **the model must still learn an absolute mapping from features to a single winning index**, which ignores some **pairwise relational signals**. This leads to a loss of the inherent ranking nature of the task.
+
+- **Low Theoretical Maximum Accuracy**  
+  Even a perfect model constrained to this formulation is **limited to guessing one out of 16 classes**, which means **the random baseline is only 6.25%**. Thus, reaching accuracies even slightly above that baseline (e.g., 10%) already reflects meaningful learning, but may **look deceptively poor** compared to standard classification benchmarks.
 > **In summary:** Our project demonstrates the feasibility of predicting race winners using machine learning. While there's room for growth, our models show that even with limited structured data, it's possible to go beyond chance—and lay the groundwork for more powerful predictive systems in the future.
 
 
