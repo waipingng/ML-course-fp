@@ -241,7 +241,7 @@ Models were evaluated using the following standard classification metrics:
 #### Random Forest
 
 <p align="center">
-  <img src="pictures_for_readme/confusion_matrix_dt.png" alt="ML-course-fp" width="600"/>
+  <img src="pictures_for_readme/confusion_matrix_rf.png" alt="ML-course-fp" width="600"/>
 </p>
 
 #### Neural Network (CNN)
