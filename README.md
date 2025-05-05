@@ -151,25 +151,39 @@ Interpretation of Results
 
 Despite generally being powerful, the Random Forest model showed very limited predictive capabilities in this specific horse racing context, indicated by extremely low performance metrics. This suggests substantial unpredictability in outcomes or inadequacy of features for effective prediction.
 
-### LightGBMClassifier Model: 
+
+## Metrics
+
+## Results
+
+
+## LightGBM Model
+### Models
+
+* ### LightGBMClassifier Model: 
 * LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with pairwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
 * Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
 ### LightGBM Ranker: 
 * LightGBM Ranker is special version of LightGBM designed for learning-to-rank like horse ranking. The lightGBM Ranker can predict ranking order within group, istead of training horses individually. 
 * Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy from LightGBM Ranker which is group-awarness.
-## Metrics
 
+### Results
+#### LightGBMClassifier Model
 
+Classification Report:
 
-## Results
-### Results for LightGBMClassifier Model:
-#### Classification Report
-![Classification Report for LightGBMClassifier Model](pictures_for_readme/classification_report_lightgbm.png)
-#### AUC Score
-![AUC Score for LightGBMClassifier Model](pictures_for_readme/auc_score_lightgbm.png)
-### Results for LightGBM Ranker:
-#### Top-1 Accuracy
-![AUC Score for LightGBMClassifier Model](pictures_for_readme/top1_accuracy_lightgbm_ranker.png)
+    Precision of Class 1: 1
+
+    Recall of Class 1 : 0.0667
+
+    F1-score of Class 1: 0.1250
+
+    F1-score of Accuracy: 0.9417
+AUC Score: 0.7743
+
+### LightGBM Ranker
+  Top-1 Accuracy: 0.4265
+
 ## Limitations
 * Different Features in Models: Since each model was trained using a different set of features, which may affect the fairness and consistency of model comparisons. Since the input features are not standardized across models, differences in performance may partially reflect differences in feature selection rather than model capability alone.
 * Imbalanced Dataset: Since only one horse per race is labeled as a winner (1), while the other 15 are labeled as non-winners (0). This imbalance may affect the model’s ability to accurately predict the true winner.
