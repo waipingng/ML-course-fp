@@ -91,6 +91,56 @@ Interpretation of Results
 
 The Decision Tree model performed poorly in predicting horse racing outcomes, indicated by very low accuracy and F1 scores. The model's results imply high unpredictability or complexity within the horse racing data that simple decision boundaries fail to capture effectively.
 
+### KNN Model:
+
+Optimal Parameters Identified
+
+    Number of Neighbors (k): 7
+
+    Weights: Distance-based
+
+    Distance Metric (p): 2 (Euclidean distance)
+
+Performance Results
+
+Accuracy: 8.49%
+
+    Precision (weighted): 8.89%
+
+    Recall (weighted): 8.49%
+
+    F1 Score (weighted): 8.52%
+
+Interpretation of Results
+
+The KNN model's performance in predicting horse racing outcomes was limited, similar to the Decision Tree model. Low accuracy and F1 scores indicate difficulty capturing meaningful patterns or reliable distinctions among outcomes.
+
+### Random Forest Model:
+
+Optimal Parameters Identified
+
+    Number of Estimators: 150
+
+    Max Depth: None
+
+    Minimum Samples Split: 2
+
+    Class Weight: Balanced
+
+Performance Results
+
+    Accuracy: 7.08%
+
+    Precision (weighted): 6.72%
+
+    Recall (weighted): 7.08%
+
+    F1 Score (weighted): 6.79%
+
+Interpretation of Results
+
+Despite generally being powerful, the Random Forest model showed very limited predictive capabilities in this specific horse racing context, indicated by extremely low performance metrics. This suggests substantial unpredictability in outcomes or inadequacy of features for effective prediction.
+
 ### LightGBMClassifier Model: 
 * LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with pairwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
 * Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
