@@ -475,7 +475,7 @@ First, XGBRegressor does not provide a reliable probability output, so it is har
 
 ## Conclusion
 
-In this project, we tackled the challenging problem of predicting the winning horse in a 16-horse race using structured race data from the Japan Racing Association. By formulating this task as a 16-class classification problem, we evaluated a range of machine learning models including Decision Trees, Logistic Regression, Random Forests, SVMs, Neural Networks, and advanced frameworks like LightGBM.
+In this project, we tackled the challenging problem of predicting the winning horse in a 16-horse race using structured race data from the https://en.netkeiba.com/. By formulating this task as a 16-class classification problem, we evaluated a range of machine learning models including Decision Trees, Logistic Regression, Random Forests, SVMs, Neural Networks, and advanced frameworks like LightGBM.
 
 Our key findings include:
 
