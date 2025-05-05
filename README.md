@@ -312,27 +312,8 @@ While performance remains modest, the nature of the problem offers valuable insi
 > **In summary:** Our project demonstrates the feasibility of predicting race winners using machine learning. While there's room for growth, our models show that even with limited structured data, it's possible to go beyond chance—and lay the groundwork for more powerful predictive systems in the future.
 
 
-## Limitation
 
-### Limitation on Dataset
 
-- **Limited Sample Size**  
-  The dataset contains only **1,060 races**, each with 16 horses. While this might seem sizable, the effective sample size from a machine learning standpoint is still relatively small for deep learning models to generalize well. A larger dataset would allow the model to observe more variations in race conditions, horse performance, and outcome patterns.
-
-- **Lack of High-Impact Features**  
-  The features available for each horse are limited to numerical and categorical attributes such as age, weight, average race time, weather, and sex. However, horse racing outcomes are influenced by a multitude of complex, dynamic factors such as **track condition, jockey performance trends, recent race fatigue, or race strategy**.
-
----
-
-### Limitation on Modeling
-
-- **Difficulty in Learning Relative Comparisons**  
-  Even though features are flattened per race to provide comparative context, **the model must still learn an absolute mapping from features to a single winning index**, which ignores some **pairwise relational signals**. This leads to a loss of the inherent ranking nature of the task.
-
-- **Low Theoretical Maximum Accuracy**  
-  Even a perfect model constrained to this formulation is **limited to guessing one out of 16 classes**, which means **the random baseline is only 6.25%**. Thus, reaching accuracies even slightly above that baseline (e.g., 10%) already reflects meaningful learning, but may **look deceptively poor** compared to standard classification benchmarks.
-
----
 
 
 
@@ -445,6 +426,11 @@ AUC Score: 0.7743
 * Imbalanced Dataset: Since only one horse per race is labeled as a winner (1), while the other 15 are labeled as non-winners (0). This imbalance may affect the model’s ability to accurately predict the true winner.
 * Data Leakage: We use the latest data to predict ranking for the race using LightGBMClassifier model. However, the model can perfectly predict the rank of each horse. Therefore, there is most likely some data leakage to cause this problem.
 ![05/04/2025 Horse Racing](pictures_for_readme/0504_ranking.png)
+- **Limited Sample Size**  
+  The dataset contains only **1,060 races**, each with 16 horses. While this might seem sizable, the effective sample size from a machine learning standpoint is still relatively small for deep learning models to generalize well. A larger dataset would allow the model to observe more variations in race conditions, horse performance, and outcome patterns.
+
+- **Lack of High-Impact Features**  
+  The features available for each horse are limited to numerical and categorical attributes such as age, weight, average race time, weather, and sex. However, horse racing outcomes are influenced by a multitude of complex, dynamic factors such as **track condition, jockey performance trends, recent race fatigue, or race strategy**.
 
 
 ## XGBoost Model
@@ -475,6 +461,13 @@ The prediction target of XGBRegressor is the speed of a given horse, and the fin
 There is a general lack of data, especially for G1 and G2 races, which makes it difficult to train the model effectively for those categories. As a result, prediction accuracy for G1 and G2 races is lower. Although the dataset includes many features related to both horses and races, it still lacks certain critical variables—such as horses’ injury records, which directly affect their performance. The absence of such features likely reduces prediction accuracy.
 * Model limitations
 First, XGBRegressor does not provide a reliable probability output, so it is hard to compare predictions with implied probabilities (1/odds), which limits its usefulness for bettors who want confidence in their wagers. Second, the model fails to explain real-world racing intuition. 
+- **Difficulty in Learning Relative Comparisons**  
+  Even though features are flattened per race to provide comparative context, **the model must still learn an absolute mapping from features to a single winning index**, which ignores some **pairwise relational signals**. This leads to a loss of the inherent ranking nature of the task.
+
+- **Low Theoretical Maximum Accuracy**  
+  Even a perfect model constrained to this formulation is **limited to guessing one out of 16 classes**, which means **the random baseline is only 6.25%**. Thus, reaching accuracies even slightly above that baseline (e.g., 10%) already reflects meaningful learning, but may **look deceptively poor** compared to standard classification benchmarks.
+
+---
 
 
 ## Conclusion
