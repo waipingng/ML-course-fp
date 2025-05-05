@@ -409,7 +409,7 @@ In lightgbm folder of models folder, in order to construct the relevant data for
 * An interesting part about this model is the implementation of pairwise comparison. The function `generate_pairwise_df()` creates differences of feature columns for every combination of horse in a race. This allows the model to learn what relative advantages each horse has and what contributes to being a winning and losing horse horse helping the model create a rank for each horse. 
 #### LightGBM Ranker: 
 * LightGBM Ranker is special version of LightGBM designed for learning-to-rank like ranking horses in a race. The lightGBM Ranker can predict ranking order within group, istead of training horses individually. 
-* Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy from LightGBM Ranker which is group-awareness.
+* Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy which means how often the model’s highest-ranked prediction matches the actual winnerfrom LightGBM Ranker which is group-awareness.
 
 ### Results
 #### LightGBMClassifier Model
