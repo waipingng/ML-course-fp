@@ -469,11 +469,7 @@ The prediction target of XGBRegressor is the speed of a given horse, and the fin
 There is a general lack of data, especially for G1 and G2 races, which makes it difficult to train the model effectively for those categories. As a result, prediction accuracy for G1 and G2 races is lower. Although the dataset includes many features related to both horses and races, it still lacks certain critical variables—such as horses’ injury records, which directly affect their performance. The absence of such features likely reduces prediction accuracy.
 * Model limitations
 First, XGBRegressor does not provide a reliable probability output, so it is hard to compare predictions with implied probabilities (1/odds), which limits its usefulness for bettors who want confidence in their wagers. Second, the model fails to explain real-world racing intuition. 
-- **Difficulty in Learning Relative Comparisons**  
-  Even though features are flattened per race to provide comparative context, **the model must still learn an absolute mapping from features to a single winning index**, which ignores some **pairwise relational signals**. This leads to a loss of the inherent ranking nature of the task.
 
-- **Low Theoretical Maximum Accuracy**  
-  Even a perfect model constrained to this formulation is **limited to guessing one out of 16 classes**, which means **the random baseline is only 6.25%**. Thus, reaching accuracies even slightly above that baseline (e.g., 10%) already reflects meaningful learning, but may **look deceptively poor** compared to standard classification benchmarks.
 
 ---
 
