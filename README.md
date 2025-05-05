@@ -449,7 +449,7 @@ AUC Score: 0.7743
 * In horse racing prediction, XGBRegressor has a clear advantage:
 It can capture complex nonlinear relationships between horse features (such as weight, age, jockey experience, and track conditions) and the target variable (e.g., speed). Compared to traditional linear models, XGBRegressor does not require assumptions like feature independence or linear correlation, and it’s able to identify deeper interactions hidden in the data, making speed predictions more accurate.
 * My method is to use XGBRegressor with some horse-related features to predict the speed of each horse in a race. Then, by ranking the predicted average speeds of each horse’s in the race, I obtain the final predicted placement of each horse in the race. 
-* run `xgb_Race16.ipynb` to predict when there are exactly 16 horses in a race, you will get result based the prediction of speed for each horse, then based on these speeds the we can get a rank from fastest to lowest average speed, and this will be the final rank for the race. You can also see the feature importance in the `xgb_Race16.ipynb` file.
+* run `xgb_Race16.ipynb` to predict when there are exactly 16 horses in a race, you will get result based the prediction of speed for each horse, then based on these speeds the we can get a rank from fastest to lowest speed, and this will be the final rank for the race. You can also see the feature importance in the `xgb_Race16.ipynb` file.
 
 ### Results
 #### XGBRegressor Model
