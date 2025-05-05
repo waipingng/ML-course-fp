@@ -7,13 +7,13 @@
 
 ## Introduction
 
-In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top 1 position of a race and to evaluate different machine learning algorithms for predictive performance and interpretability.
+In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the Japan Jockey Association (JRA). Our primary goal is to determine whether a horse will finish in the top 1 position of a race with 16 hourses and to evaluate different machine learning algorithms for predictive performance and interpretability.
 
 ## Problem Statement
 
 We formulate this as a multiclass classification problem:
 
-    Top 1: Horse wins the race
+    Top 1 Horse wins the race
 
 
 The broader goals include:
@@ -43,7 +43,7 @@ The broader goals include:
 
 - One-hot encoded Grade, Weather, and Race Type.
 
-- Created binary target variables for Top 1 and Top 3 finishes.
+- Created binary target variables for Top 1 finishes.
 
 - Normalized Odds and Horse Weight.
 
@@ -66,6 +66,16 @@ We tested the following models:
     Neural Network (PyTorch)
 
     RBF SVC
+
+Models were evaluated using:
+
+    Accuracy
+
+    ROC-AUC Score
+
+    Average Precision
+
+    Confusion Matrix
 
 ### Decision Tree Mode:
 
@@ -91,6 +101,56 @@ Interpretation of Results
 
 The Decision Tree model performed poorly in predicting horse racing outcomes, indicated by very low accuracy and F1 scores. The model's results imply high unpredictability or complexity within the horse racing data that simple decision boundaries fail to capture effectively.
 
+### KNN Model:
+
+Optimal Parameters Identified
+
+    Number of Neighbors (k): 7
+
+    Weights: Distance-based
+
+    Distance Metric (p): 2 (Euclidean distance)
+
+Performance Results
+
+    Accuracy: 8.49%
+
+    Precision (weighted): 8.89%
+
+    Recall (weighted): 8.49%
+
+    F1 Score (weighted): 8.52%
+
+Interpretation of Results
+
+The KNN model's performance in predicting horse racing outcomes was limited, similar to the Decision Tree model. Low accuracy and F1 scores indicate difficulty capturing meaningful patterns or reliable distinctions among outcomes.
+
+### Random Forest Model:
+
+Optimal Parameters Identified
+
+    Number of Estimators: 150
+
+    Max Depth: None
+
+    Minimum Samples Split: 2
+
+    Class Weight: Balanced
+
+Performance Results
+
+    Accuracy: 7.08%
+
+    Precision (weighted): 6.72%
+
+    Recall (weighted): 7.08%
+
+    F1 Score (weighted): 6.79%
+
+Interpretation of Results
+
+Despite generally being powerful, the Random Forest model showed very limited predictive capabilities in this specific horse racing context, indicated by extremely low performance metrics. This suggests substantial unpredictability in outcomes or inadequacy of features for effective prediction.
+
 ### LightGBMClassifier Model: 
 * LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification when working with large dataset. Based on our goal, this LightGBM Classifier is combined with pairwise since it is a ranking problem to compare pairs of horses in the same race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
 * Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
@@ -99,15 +159,7 @@ The Decision Tree model performed poorly in predicting horse racing outcomes, in
 * Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy from LightGBM Ranker which is group-awarness.
 ## Metrics
 
-Models were evaluated using:
 
-    Accuracy
-
-    ROC-AUC Score
-
-    Average Precision
-
-    Confusion Matrix
 
 ## Results
 ### Results for LightGBMClassifier Model:
