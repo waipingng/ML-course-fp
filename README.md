@@ -26,7 +26,7 @@ The broader goals include:
 
 ## Data Overview
 
-    Source: Japan Jockey Association (JRA)
+    Source: https://en.netkeiba.com/
 
     Collection: Web-scraped historical data
 
@@ -34,7 +34,7 @@ The broader goals include:
 
 ### Data Specification
 
-The dataset consists of web-scraped historical race records from the Japan Jockey Association (JRA). Each row represents the performance of a single horse in a single race. The following columns are included:
+The dataset consists of web-scraped historical race records from https://en.netkeiba.com/ Each row represents the performance of a single horse in a single race. The following columns are included:
 
 - **Race ID**: Unique identifier for each race  
 - **Race Name / Race Time**: Name and scheduled time of the race  
@@ -44,7 +44,7 @@ The dataset consists of web-scraped historical race records from the Japan Jocke
 - **Finish Position**: Final placement of the horse in the race  
 - **Bracket Number / Horse Number**: Official entry numbers  
 - **Horse Name / Horse ID**: Name and unique identifier for the horse  
-- **Age/Sex**: Combined field indicating horse age and sex (e.g., 4M = 4-year-old male)  
+- **Age/Sex**: Combined field indicating horse age and sex (e.g., 4M = 4-year-old mare)  
 - **Weight (kg)**: Declared weight carried by the horse (includes jockey)  
 - **Jockey**: Name of the jockey riding the horse  
 - **Final Time**: Horse’s total time to complete the race  
