@@ -399,6 +399,8 @@ Despite generally being powerful, the Random Forest model showed very limited pr
 
 
 ## LightGBM Model
+### Data Cleaning
+In lightgbm folder of models folder, in order to construct the relevant data for LightGBMClassifier/Ranker, running `data_cleaning_for_lightgbm.py` to obtain `cleaned_race_results_for_lightgbm.csv` which is saved in data_lightgbm folder.
 ### Models
 
 #### LightGBMClassifier Model: 
