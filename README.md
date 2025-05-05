@@ -168,16 +168,21 @@ Despite generally being powerful, the Random Forest model showed very limited pr
 * Run `lightgbm_ranker.ipynb`: We can get Top-1 accuracy from LightGBM Ranker which is group-awarness.
 
 ### Results
-* LightGBMClassifier Model
-Classification Report
+#### LightGBMClassifier Model
 
-    Accuracy: 7.08%
+Classification Report:
 
-    Precision (weighted): 6.72%
+    Precision of Class 1: 1
 
-    Recall (weighted): 7.08%
+    Recall of Class 1 : 0.0667
 
-    F1 Score (weighted): 6.79%
+    F1-score of Class 1: 0.1250
+
+    F1-score of Accuracy: 0.9417
+AUC Score: 0.7743
+
+### LightGBM Ranker
+  Top-1 Accuracy: 0.4265
 
 ## Limitations
 * Different Features in Models: Since each model was trained using a different set of features, which may affect the fairness and consistency of model comparisons. Since the input features are not standardized across models, differences in performance may partially reflect differences in feature selection rather than model capability alone.
