@@ -7,7 +7,7 @@
 
 ## Introduction
 
-In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the https://en.netkeiba.com/ which is the largest horse racing website in Japan. Our primary goal is to determine whether a horse will finish in the top 1 position of a race with 16 hourses and to evaluate different machine learning algorithms for predictive performance and interpretability.
+In this project, we aim to build a classification model to predict horse racing outcomes using historical data from the https://en.netkeiba.com/ which is the largest horse racing website in Japan. Our primary goal is to determine whether a horse will finish in the top 1 position of a race with 16 hourses and to evaluate different machine learning algorithms for predictive performance and interpretability. In this casw we also have an ultimate goal--applying the predicted probability of a horse finishing its 1st place on betting, if our predictions are solid and we are lucky then we may win ourselfves a dinner!
 
 ## Problem Statement
 
@@ -45,13 +45,13 @@ The dataset consists of web-scraped historical race records from https://en.netk
 - **Bracket Number / Horse Number**: Official entry numbers  
 - **Horse Name / Horse ID**: Name and unique identifier for the horse  
 - **Age/Sex**: Combined field indicating horse age and sex (e.g., 4M = 4-year-old mare)  
-- **Weight (kg)**: Declared weight carried by the horse (includes jockey)  
+- **Total_Weight (kg)**: Declared weight carried by the horse (includes jockey)  
 - **Jockey**: Name of the jockey riding the horse  
 - **Final Time**: Horse’s total time to complete the race  
 - **Margin**: Gap behind the horse in front (if not 1st place)  
 - **Position at Bends**: Horse’s relative position at turns (corners)  
 - **Last 3F**: Time taken to run the final 600 meters (furlongs)  
-- **Odds / Favorite**: Betting odds and popularity ranking  
+- **Odds / Favorite**: Betting odds and popularity ranking, usually they are highly related--the odds make effects on favorite rank.
 - **Horse Weight (kg)**: Actual body weight of the horse before the race  
 - **Trainer / Owner**: Names of the horse’s trainer and owner  
 - **Prize (¥ mil)**: Monetary reward (in millions of yen) based on placement
@@ -448,7 +448,7 @@ AUC Score: 0.7743
 * XGBRegressor is an efficient and scalable regression model. It uses a boosting strategy that fits the residuals along the gradient direction, where each new tree aims to correct the errors made by the previous ones.By training a series of trees that improve step by step, the model minimizes prediction error and works well for regression tasks on structured data.
 * In horse racing prediction, XGBRegressor has a clear advantage:
 It can capture complex nonlinear relationships between horse features (such as weight, age, jockey experience, and track conditions) and the target variable (e.g., speed). Compared to traditional linear models, XGBRegressor does not require assumptions like feature independence or linear correlation, and it’s able to identify deeper interactions hidden in the data, making speed predictions more accurate.
-* My method is to use XGBRegressor with some horse-related features to predict the speed of each horse in a race. Then, by ranking the predicted average speeds of each horse’s in the race, I obtain the final predicted placement of each horse in the race. 
+* My method is to use XGBRegressor with some horse-related features to predict the speed of each horse in a race. Then, by ranking the predicted speeds of each horse’s in the race, I obtain the final predicted placement of each horse in the race. 
 * run `xgb_Race16.ipynb` to predict when there are exactly 16 horses in a race, you will get result based the prediction of speed for each horse, then based on these speeds the we can get a rank from fastest to lowest speed, and this will be the final rank for the race. You can also see the feature importance in the `xgb_Race16.ipynb` file.
 
 ### Results
@@ -494,6 +494,17 @@ Despite the limited size and scope of the dataset, our models were able to captu
 - Place betting (Top 3) – The bettor selects a single horse to finish within the top three. If the horse places 1st, 2nd, or 3rd, the bettor is paid according to the odds. Again, around 20% of the total profit is deducted by the racing association.
 - Trifecta – The bettor selects three horses and their exact finishing order (1st, 2nd, and 3rd). If the prediction is entirely correct, the payout is made based on the odds. In this case, about 27.5% of the total profit is retained by the racing association.
 
+#### Betting Strategy and Explanation
+- We use the LightGBMClassifier model and its prediction results as examples.(Just forgot the perfect prediction for now we assume everything is normal and valid here.)
+<p align="center">
+  <img src="pictures_for_readme/0504_ranking.png" alt="ML-course-fp" width="600"/>
+</p>
+When we look into the result we will find "Redentor" is the most likely one to win the 1st place in the certain race. After softmax process we assume the probability is valid and reliable so "Redentor" very likely has about 42.72% probability to win. 
+1. So if we only play [Win Betting] at this time, we will compare the implied probability which we get from odds with the 42.72% that "Redentor" win. If 42.72% is greater than the implied probability we will bet on "Redentor", if not maybe will looking for the comparison of "Byzanine Dream"'s win probability(42.18) and its implied probability of win. Or we just give up. But in general the profit in expression is not the expected profit and if we look deeper in expected profit that will not be a good number for profit.
+For example, if we win the bet on "Redentor", we will get the profit = ("Redentor"'s odds-1) * [our bet amount] * (1-0.2), if we lose we get 0.
+2. If we play Place betting(Top 3), this would be more safe(risk averse) for us, simply we can just look at the result and bet on "Redentor" on Top3 position. But here we don't have the odds for Place Betting so we can not get a expression for the profit of the certain betting. Also it is worth to notice the profit we disscuss here is not our expected profit, it is unstable and not that reliable.
+3. For the last one Trifecta, currently our model can't predict it very well so we will not play this bet model for now. 
+
 #### XGBRegressor featues Encode
 * Bracekt
 - In Japanese horse racing, each horse is assigned a bracket number (1–8) based on its gate position, grouped by color. Horses in inner brackets (such as 1 or 2) start closer to the rail, which may benefit fast starters. In contrast, outer brackets (like 7 or 8) offer more running space but usually require the horse to cover slightly more distance around the turns.
@@ -508,7 +519,7 @@ Despite the limited size and scope of the dataset, our models were able to captu
 (Numeric value of a target horse’s feature) ÷ (mean value of the same feature across the other horses in the race).
 This normalized metric is used to compare how a horse's feature stands relative to the rest of the field in the same race
 * AVG_Speed_Mean
-- The average of historical average speeds of all other horses in the same race (excluding the target horse).
+- The average of historical average speeds of all other horses in the same race (excluding the target horse). This implies the competition degree in the group and can also give indirectly recognization of the speed of target horse.
 * Top3_Percentage
 - For each horse, this is the percentage of past races in which the horse finished in the top 3.
 * Top3_Percentage_Mean
