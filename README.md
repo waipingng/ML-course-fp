@@ -402,7 +402,7 @@ Despite generally being powerful, the Random Forest model showed very limited pr
 ### Data Cleaning
 In lightgbm folder of models folder, in order to construct the relevant data for LightGBMClassifier/Ranker, running `data_cleaning_for_lightgbm.py` to obtain `cleaned_race_results_for_lightgbm.csv` which is saved in data_lightgbm folder.
 ### Models
-
+Features choosing: Run `top_features_lightgbm.ipynb`
 #### LightGBMClassifier Model: 
 * LightGBM (Light Gradient Boosting Machine) is a tree-based model which is usually used for classification and it generates a tree leaf-wise. Based on our goal, this LightGBM Classifier is combined with the idea of pairwise comparisons in order to better rank horses in a race. Also, we calibrate the probabilities to adjust the predicted probabilities to fit the real situation better.
 * Run `lightgbm_diff_pairwise.ipynb`: After finding feature importances from `top_features_lightgbm.ipynb`, the model is a feature-based LightGBMClassifier Model.
